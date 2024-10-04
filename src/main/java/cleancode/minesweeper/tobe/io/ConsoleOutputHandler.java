@@ -3,6 +3,9 @@ package cleancode.minesweeper.tobe.io;
 import cleancode.minesweeper.tobe.GameBoard;
 import cleancode.minesweeper.tobe.GameException;
 
+import java.util.List;
+import java.util.stream.IntStream;
+
 /**
  * SRP : Single Responsibility Principle
  * 단일 책임의 원칙에 따라 Board 게임을 할 때의 출력 메시지 역할을 맡은 클래스 분리 : MineSweeper, ConsoleOutputHandler
@@ -15,15 +18,26 @@ public class ConsoleOutputHandler {
     }
 
     public void showBoard(GameBoard board) {
-        System.out.println("   a b c d e f g h i j");
+        String alphabets = generateColAlphabets(board);
+
+//        System.out.println("   a b c d e f g h i j");
+        System.out.println("    " + alphabets);
         for (int row = 0; row < board.getRowSize(); row++) {
-            System.out.printf("%d  ", row + 1);
+            System.out.printf("%2d  ", row + 1);
             for (int col = 0; col < board.getColSize(); col++) {
                 System.out.print(board.getSign(row, col) + " ");
             }
             System.out.println();
         }
         System.out.println();
+    }
+
+    private String generateColAlphabets(GameBoard board) {
+        List<String> alphabets = IntStream.range(0, board.getColSize())
+                .mapToObj(index -> (char) ('a' + index))
+                .map(Object::toString).toList();
+        String joiningAlphabets = String.join(" ", alphabets);
+        return joiningAlphabets;
     }
 
     public void printGameWinningComment() {
