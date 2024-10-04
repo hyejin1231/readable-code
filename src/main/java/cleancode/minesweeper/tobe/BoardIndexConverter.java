@@ -20,7 +20,7 @@ public class BoardIndexConverter {
 
 
     private  int convertRowFrom(String cellInputRow, int rowSize) {
-        int rowIndex = Integer.parseInt(cellInputRow);
+        int rowIndex = Integer.parseInt(cellInputRow) -1;
         if (rowIndex < 0 || rowIndex >= rowSize) {
             throw new GameException("잘못된 입력입니다.");
         }
