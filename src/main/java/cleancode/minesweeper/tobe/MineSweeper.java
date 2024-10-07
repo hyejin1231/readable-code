@@ -1,5 +1,7 @@
 package cleancode.minesweeper.tobe;
 
+import cleancode.minesweeper.tobe.game.GameInitializable;
+import cleancode.minesweeper.tobe.game.GameRunnable;
 import cleancode.minesweeper.tobe.gamelevel.GameLevel;
 import cleancode.minesweeper.tobe.io.ConsoleInputHandler;
 import cleancode.minesweeper.tobe.io.ConsoleOutputHandler;
@@ -12,7 +14,7 @@ import cleancode.minesweeper.tobe.io.ConsoleOutputHandler;
  * -> 새로운 요구사항이 들어왔을 때, 기존의 기능을 최대한 수정하지 않고 확장이 가능해야 함
  * -> 레벨 난이도 조정 기능 추가
  */
-public class MineSweeper {
+public class MineSweeper implements GameInitializable, GameRunnable {
 
     private final GameBoard gameBoard;
     private final BoardIndexConverter boardIndexConverter = new BoardIndexConverter();
@@ -25,9 +27,13 @@ public class MineSweeper {
         gameBoard = new GameBoard(gameLevel);
     }
 
+    @Override
+    public void initialize() {
+        gameBoard.initializeGame();
+    }
+
     public void run() {
         consoleOutputHandler.showGameStartComments();
-        gameBoard.initializeGame();
 
         while (true) { // 게임이 시작되는 부분
             try {
