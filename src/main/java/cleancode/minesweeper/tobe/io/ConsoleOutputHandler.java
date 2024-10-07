@@ -10,13 +10,14 @@ import java.util.stream.IntStream;
  * SRP : Single Responsibility Principle
  * 단일 책임의 원칙에 따라 Board 게임을 할 때의 출력 메시지 역할을 맡은 클래스 분리 : MineSweeper, ConsoleOutputHandler
  */
-public class ConsoleOutputHandler {
+public class ConsoleOutputHandler implements OutputHandler{
     public void showGameStartComments() {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println("지뢰찾기 게임 시작!");
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     }
 
+    @Override
     public void showBoard(GameBoard board) {
         String alphabets = generateColAlphabets(board);
 
@@ -32,7 +33,8 @@ public class ConsoleOutputHandler {
         System.out.println();
     }
 
-    private String generateColAlphabets(GameBoard board) {
+    @Override
+    public String generateColAlphabets(GameBoard board) {
         List<String> alphabets = IntStream.range(0, board.getColSize())
                 .mapToObj(index -> (char) ('a' + index))
                 .map(Object::toString).toList();
@@ -40,27 +42,33 @@ public class ConsoleOutputHandler {
         return joiningAlphabets;
     }
 
-    public void printGameWinningComment() {
+    @Override
+    public void showGameWinningComment() {
         System.out.println("지뢰를 모두 찾았습니다. GAME CLEAR!");
     }
 
-    public void printGameLosingComment() {
+    @Override
+    public void showGameLosingComment() {
         System.out.println("지뢰를 밟았습니다. GAME OVER!");
     }
 
-    public void printCommentForSelectingCell() {
+    @Override
+    public void showCommentForSelectingCell() {
         System.out.println("선택할 좌표를 입력하세요. (예: a1)");
     }
 
-    public void printCommentForUserAction() {
+    @Override
+    public void showCommentForUserAction() {
         System.out.println("선택한 셀에 대한 행위를 선택하세요. (1: 오픈, 2: 깃발 꽂기)");
     }
 
-    public void printExceptionMessage(GameException e) {
+    @Override
+    public void showExceptionMessage(GameException e) {
         System.out.println(e.getMessage());
     }
 
-    public void printSimpleMessage(String message) {
+    @Override
+    public void showSimpleMessage(String message) {
         System.out.println(message);
     }
 }
