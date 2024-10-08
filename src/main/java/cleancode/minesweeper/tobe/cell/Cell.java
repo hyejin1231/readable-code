@@ -1,38 +1,27 @@
 package cleancode.minesweeper.tobe.cell;
 
 /**
- * SOLID (3) : LSP 리스코프 치환 원칙
- * -> Cell, LandMineCell, NumberCell, EmptyCell 로 부모-자식 상속 관계로 변경
+ * 상속과 조합
+ * -> 상속보다는 조합을 사용해서 중복 코드가 조금 있더라도 유연하게 설계하는 것이 더 좋다.
  */
-public abstract class Cell
+public interface Cell
 {
-    protected static final String FLAG_SIGN = "⚑";
-    protected static final String UNCHECKED_SIGN = "□";
-    protected boolean isFlagged; // 깃발 유무
-    protected boolean isOpened; // 오픈 여부
+    String FLAG_SIGN = "⚑";
+    String UNCHECKED_SIGN = "□";
 
-    public abstract boolean isLandMine();
+    boolean isLandMine();
 
-    public abstract boolean hasLandMineCount();
+    boolean hasLandMineCount();
 
-    public abstract String getSign();
+    String getSign();
 
-    public void flag() {
-        this.isFlagged = true;
-    }
+    void flag();
 
-    public void open() {
-        this.isOpened = true;
-    }
+    void open();
 
-    public boolean isChecked() {
-        return isFlagged || isOpened;
-    }
+    boolean isChecked();
 
-
-    public boolean isOpened() {
-        return isOpened;
-    }
+    boolean isOpened();
 
 
 }
