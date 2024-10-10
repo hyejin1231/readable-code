@@ -40,6 +40,7 @@ public class ConsoleOutputHandler implements OutputHandler{
         List<String> alphabets = IntStream.range(0, board.getColSize())
                 .mapToObj(index -> (char) ('a' + index))
                 .map(Object::toString).toList();
+
         String joiningAlphabets = String.join(" ", alphabets);
         return joiningAlphabets;
     }

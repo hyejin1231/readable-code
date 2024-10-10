@@ -1,22 +1,16 @@
 package cleancode.minesweeper.tobe.cell;
 
-/**
- * 상속과 조합
- */
-public class CellState
-{
+public class CellState {
 
 	private boolean isFlagged;
 	private boolean isOpened;
 
-	public CellState(boolean isFlagged, boolean isOpened)
-	{
+	private CellState(boolean isFlagged, boolean isOpened) {
 		this.isFlagged = isFlagged;
 		this.isOpened = isOpened;
 	}
 
-	public static CellState initialize()
-	{
+	public static CellState initialize() {
 		return new CellState(false, false);
 	}
 
@@ -32,13 +26,12 @@ public class CellState
 		return isFlagged || isOpened;
 	}
 
-
 	public boolean isOpened() {
 		return isOpened;
 	}
 
-	public boolean isFlagged()
-	{
+	public boolean isFlagged() {
 		return isFlagged;
 	}
+
 }

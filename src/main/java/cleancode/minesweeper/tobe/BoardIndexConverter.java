@@ -5,7 +5,6 @@ package cleancode.minesweeper.tobe;
  * -> 인덱스 변환하는 과정을 따로 분리한 클래스 : MineSweeper, BoardIndexConverter
  */
 public class BoardIndexConverter {
-
     private static final char BASE_CHAR_FOR_COL = 'a';
 
     public int getSelectedRowIndex(String cellInput) {

@@ -1,61 +1,50 @@
 package cleancode.minesweeper.tobe.cell;
 
-/**
- * (3) LSP : 리스코프 치환의 원칙
- * -> Cell 부모-상속 클래스로 분리
- */
-public class EmptyCell implements Cell
-{
+public class EmptyCell implements Cell {
+
 	private static final String EMPTY_SIGN = "■";
+
 	private final CellState cellState = CellState.initialize();
 
 	@Override
-	public boolean isLandMine()
-	{
+	public boolean isLandMine() {
 		return false;
 	}
 
 	@Override
-	public boolean hasLandMineCount()
-	{
+	public boolean hasLandMineCount() {
 		return false;
 	}
 
 	@Override
-	public String getSign()
-	{
-		if (cellState.isOpened())
-		{
+	public String getSign() {
+		if (cellState.isOpened()) {
 			return EMPTY_SIGN;
 		}
-		if (cellState.isFlagged())
-		{
+		if (cellState.isFlagged()) {
 			return FLAG_SIGN;
 		}
 		return UNCHECKED_SIGN;
 	}
 
 	@Override
-	public void flag()
-	{
+	public void flag() {
 		cellState.flag();
 	}
 
 	@Override
-	public void open()
-	{
+	public void open() {
 		cellState.open();
 	}
 
 	@Override
-	public boolean isChecked()
-	{
+	public boolean isChecked() {
 		return cellState.isChecked();
 	}
 
 	@Override
-	public boolean isOpened()
-	{
+	public boolean isOpened() {
 		return cellState.isOpened();
 	}
+
 }
