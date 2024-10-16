@@ -6,15 +6,15 @@ import cleancode.minesweeper.tobe.game.GameRunnable;
 import cleancode.minesweeper.tobe.io.InputHandler;
 import cleancode.minesweeper.tobe.io.OutputHandler;
 import cleancode.minesweeper.tobe.position.CellPosition;
-import cleancode.user.UserAction;
+import cleancode.minesweeper.tobe.user.UserAction;
 
-public class MineSweeper implements GameInitializable, GameRunnable {
-
+public class Minesweeper implements GameInitializable, GameRunnable
+{
     private final GameBoard gameBoard;
     private final InputHandler inputHandler;
     private final OutputHandler outputHandler;
 
-    public MineSweeper(GameConfig gameConfig) {
+    public Minesweeper(GameConfig gameConfig) {
         gameBoard = new GameBoard(gameConfig.getGameLevel());
         this.inputHandler = gameConfig.getInputHandler();
         this.outputHandler = gameConfig.getOutputHandler();
@@ -34,8 +34,8 @@ public class MineSweeper implements GameInitializable, GameRunnable {
                 outputHandler.showBoard(gameBoard);
 
                 CellPosition cellPosition = getCellInputFromUser();
-                UserAction userActionInput = getUserActionInputFromUser();
-                actOnCell(cellPosition, userActionInput);
+                UserAction userAction = getUserActionInputFromUser();
+                actOnCell(cellPosition, userAction);
             } catch (GameException e) {
                 outputHandler.showExceptionMessage(e);
             } catch (Exception e) {
@@ -68,17 +68,25 @@ public class MineSweeper implements GameInitializable, GameRunnable {
         return inputHandler.getUserActionFromUser();
     }
 
-    private void actOnCell(CellPosition cellPosition, UserAction userActionInput) {
-        if (gameBoard.isWinStatus()) {
+    private void actOnCell(CellPosition cellPosition, UserAction userAction) {
+        if (doesUserChooseToPlantFlag(userAction)) {
             gameBoard.flagAt(cellPosition);
             return;
         }
 
-        if (gameBoard.isLoseStatus()) {
+        if (doesUserChooseToOpenCell(userAction)) {
             gameBoard.openAt(cellPosition);
             return;
         }
         throw new GameException("잘못된 번호를 선택하셨습니다.");
+    }
+
+    private boolean doesUserChooseToPlantFlag(UserAction userAction) {
+        return userAction == UserAction.FLAG;
+    }
+
+    private boolean doesUserChooseToOpenCell(UserAction userAction) {
+        return userAction == UserAction.OPEN;
     }
 
 }

@@ -14,9 +14,8 @@ public class EmptyCell implements Cell {
 		return false;
 	}
 
-
 	@Override
-	public CellSnapshot getSnapShat() {
+	public CellSnapshot getSnapshot() {
 		if (cellState.isOpened()) {
 			return CellSnapshot.ofEmpty();
 		}

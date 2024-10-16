@@ -1,6 +1,7 @@
 package cleancode.minesweeper.tobe.cell;
 
 public class LandMineCell implements Cell {
+
 	private final CellState cellState = CellState.initialize();
 
 	@Override
@@ -14,7 +15,7 @@ public class LandMineCell implements Cell {
 	}
 
 	@Override
-	public CellSnapshot getSnapShat() {
+	public CellSnapshot getSnapshot() {
 		if (cellState.isOpened()) {
 			return CellSnapshot.ofLandMine();
 		}

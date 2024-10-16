@@ -4,7 +4,6 @@ import cleancode.minesweeper.tobe.gamelevel.GameLevel;
 import cleancode.minesweeper.tobe.io.InputHandler;
 import cleancode.minesweeper.tobe.io.OutputHandler;
 
-
 /**
  * 숨겨져 있는 도메인 개념 도출하기
  * -> 여기서 게임 설정 정보라는 도메인 개념 추출해서 MineSweeper에 생성자 변경을 최소화 하는 것이다.
@@ -14,7 +13,6 @@ public class GameConfig
 {
 	private final GameLevel gameLevel;
 	private final InputHandler inputHandler;
-
 	private final OutputHandler outputHandler;
 
 	public GameConfig(GameLevel gameLevel, InputHandler inputHandler, OutputHandler outputHandler)

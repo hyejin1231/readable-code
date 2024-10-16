@@ -12,10 +12,7 @@ public interface OutputHandler {
 
     void showBoard(GameBoard board);
 
-    String generateColAlphabets(GameBoard board);
-
     void showGameWinningComment();
-
     void showGameLosingComment();
 
     void showCommentForSelectingCell();

@@ -2,23 +2,19 @@ package cleancode.minesweeper.tobe.io;
 
 import cleancode.minesweeper.tobe.GameBoard;
 import cleancode.minesweeper.tobe.GameException;
-import cleancode.minesweeper.tobe.cell.CellSnapshotStatus;
 import cleancode.minesweeper.tobe.cell.CellSnapshot;
+import cleancode.minesweeper.tobe.io.sign.CellSignFinder;
+import cleancode.minesweeper.tobe.io.sign.CellSignProvider;
 import cleancode.minesweeper.tobe.position.CellPosition;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
-/**
- * SRP : Single Responsibility Principle
- * 단일 책임의 원칙에 따라 Board 게임을 할 때의 출력 메시지 역할을 맡은 클래스 분리 : MineSweeper, ConsoleOutputHandler
- */
-public class ConsoleOutputHandler implements OutputHandler{
+public class ConsoleOutputHandler implements OutputHandler {
 
-    private static final String EMPTY_SIGN = "■";
-    private static final String LAND_MINE_SIGN = "☼";
-    private static final String FLAG_SIGN = "⚑";
-    private static final String  UNCHECKED_SIGN = "□";
+    private final CellSignFinder cellSignFinder = new CellSignFinder();
+
+    @Override
     public void showGameStartComments() {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println("지뢰찾기 게임 시작!");
@@ -29,14 +25,16 @@ public class ConsoleOutputHandler implements OutputHandler{
     public void showBoard(GameBoard board) {
         String alphabets = generateColAlphabets(board);
 
-//        System.out.println("   a b c d e f g h i j");
         System.out.println("    " + alphabets);
         for (int row = 0; row < board.getRowSize(); row++) {
             System.out.printf("%2d  ", row + 1);
             for (int col = 0; col < board.getColSize(); col++) {
                 CellPosition cellPosition = CellPosition.of(row, col);
-                CellSnapshot cellSnapshot = board.getSnapShot(cellPosition);
-                String cellSign = decideCellSignFrom(cellSnapshot);
+
+                CellSnapshot snapshot = board.getSnapshot(cellPosition);
+//                String cellSign = cellSignFinder.findCellSignFrom(snapshot);
+                String cellSign = CellSignProvider.findCellSignFrom(snapshot);
+
                 System.out.print(cellSign + " ");
             }
             System.out.println();
@@ -44,45 +42,12 @@ public class ConsoleOutputHandler implements OutputHandler{
         System.out.println();
     }
 
-    private String decideCellSignFrom(CellSnapshot cellSnapshot)
-    {
-        CellSnapshotStatus status = cellSnapshot.getStatus();
-        if (status == CellSnapshotStatus.EMPTY)
-        {
-            return EMPTY_SIGN;
-        }
-
-        if (status == CellSnapshotStatus.FLAG)
-        {
-            return FLAG_SIGN;
-        }
-
-        if (status == CellSnapshotStatus.LAND_MINE)
-        {
-            return LAND_MINE_SIGN;
-        }
-
-        if (status == CellSnapshotStatus.NUMBER)
-        {
-            return String.valueOf(cellSnapshot.getNearbyLandMineCount());
-        }
-
-        if (status == CellSnapshotStatus.UNCHECKED)
-        {
-            return UNCHECKED_SIGN;
-        }
-
-        throw new IllegalArgumentException("확인할 수 없는 셀입니다.");
-    }
-
-    @Override
-    public String generateColAlphabets(GameBoard board) {
+    private String generateColAlphabets(GameBoard board) {
         List<String> alphabets = IntStream.range(0, board.getColSize())
                 .mapToObj(index -> (char) ('a' + index))
-                .map(Object::toString).toList();
-
-        String joiningAlphabets = String.join(" ", alphabets);
-        return joiningAlphabets;
+                .map(Object::toString)
+                .toList();
+        return String.join(" ", alphabets);
     }
 
     @Override
@@ -114,4 +79,5 @@ public class ConsoleOutputHandler implements OutputHandler{
     public void showSimpleMessage(String message) {
         System.out.println(message);
     }
+
 }

@@ -1,10 +1,7 @@
 package cleancode.minesweeper.tobe;
 
-/**
- * SRP : 단일 책임의 원칙
- * -> 인덱스 변환하는 과정을 따로 분리한 클래스 : MineSweeper, BoardIndexConverter
- */
 public class BoardIndexConverter {
+
     private static final char BASE_CHAR_FOR_COL = 'a';
 
     public int getSelectedRowIndex(String cellInput) {
@@ -12,14 +9,13 @@ public class BoardIndexConverter {
         return convertRowFrom(cellInputRow);
     }
 
-    public int getSelectedColIndex(String cellInput)  {
+    public int getSelectedColIndex(String cellInput) {
         char cellInputCol = cellInput.charAt(0);
         return convertColFrom(cellInputCol);
     }
 
-
-    private  int convertRowFrom(String cellInputRow) {
-        int rowIndex = Integer.parseInt(cellInputRow) -1;
+    private int convertRowFrom(String cellInputRow) {
+        int rowIndex = Integer.parseInt(cellInputRow) - 1;
         if (rowIndex < 0) {
             throw new GameException("잘못된 입력입니다.");
         }
@@ -27,12 +23,13 @@ public class BoardIndexConverter {
         return rowIndex;
     }
 
-    private  int convertColFrom(char cellInputCol) {
+    private int convertColFrom(char cellInputCol) {
         int colIndex = cellInputCol - BASE_CHAR_FOR_COL;
-
         if (colIndex < 0) {
             throw new GameException("잘못된 입력입니다.");
         }
+
         return colIndex;
     }
+
 }

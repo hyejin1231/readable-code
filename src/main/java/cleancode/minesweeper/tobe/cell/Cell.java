@@ -6,7 +6,7 @@ public interface Cell {
 
     boolean hasLandMineCount();
 
-    CellSnapshot getSnapShat();
+    CellSnapshot getSnapshot();
 
     void flag();
 

@@ -5,17 +5,6 @@ import cleancode.minesweeper.tobe.gamelevel.Beginner;
 import cleancode.minesweeper.tobe.io.ConsoleInputHandler;
 import cleancode.minesweeper.tobe.io.ConsoleOutputHandler;
 
-/**
- * (1) SRP : 단일 책임의 원칙
- * -> 마인스위퍼 게임과 게임을 실행하는 부분을 분리 : MineSweeper, GameApplication 분리
- *
- * (2) OCP : 개방-폐쇄의 원칙
- * -> 유동적으로 런타임 시점에 원하는 난이도를 선택해서 만들 수 있도록 !!
- *
- * (5) DIP : 의존성 역전 원칙
- *
- * 숨겨진 도메인 개념 추출하기
- */
 public class GameApplication {
 
     public static void main(String[] args) {
@@ -25,10 +14,9 @@ public class GameApplication {
                 new ConsoleOutputHandler()
         );
 
-        MineSweeper mineSweeper = new MineSweeper(gameConfig);
-
-        mineSweeper.initialize();
-        mineSweeper.run();
+        Minesweeper minesweeper = new Minesweeper(gameConfig);
+        minesweeper.initialize();
+        minesweeper.run();
     }
 
 }
