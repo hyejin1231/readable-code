@@ -3,7 +3,7 @@ package cleancode.minesweeper.tobe.cell;
 /**
  * Enum의 특성과 활용
  */
-public enum CellSnapShotStatus
+public enum CellSnapshotStatus
 {
 	EMPTY("빈 셀"),
 	FLAG("깃 발"),
@@ -14,7 +14,7 @@ public enum CellSnapShotStatus
 
 	private final String description;
 
-	CellSnapShotStatus(String description)
+	CellSnapshotStatus(String description)
 	{
 		this.description = description;
 	}

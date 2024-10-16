@@ -2,7 +2,7 @@ package cleancode.minesweeper.tobe.io;
 
 import cleancode.minesweeper.tobe.GameBoard;
 import cleancode.minesweeper.tobe.GameException;
-import cleancode.minesweeper.tobe.cell.CellSnapShotStatus;
+import cleancode.minesweeper.tobe.cell.CellSnapshotStatus;
 import cleancode.minesweeper.tobe.cell.CellSnapshot;
 import cleancode.minesweeper.tobe.position.CellPosition;
 
@@ -46,28 +46,28 @@ public class ConsoleOutputHandler implements OutputHandler{
 
     private String decideCellSignFrom(CellSnapshot cellSnapshot)
     {
-        CellSnapShotStatus status = cellSnapshot.getStatus();
-        if (status == CellSnapShotStatus.EMPTY)
+        CellSnapshotStatus status = cellSnapshot.getStatus();
+        if (status == CellSnapshotStatus.EMPTY)
         {
             return EMPTY_SIGN;
         }
 
-        if (status == CellSnapShotStatus.FLAG)
+        if (status == CellSnapshotStatus.FLAG)
         {
             return FLAG_SIGN;
         }
 
-        if (status == CellSnapShotStatus.LAND_MINE)
+        if (status == CellSnapshotStatus.LAND_MINE)
         {
             return LAND_MINE_SIGN;
         }
 
-        if (status == CellSnapShotStatus.NUMBER)
+        if (status == CellSnapshotStatus.NUMBER)
         {
             return String.valueOf(cellSnapshot.getNearbyLandMineCount());
         }
 
-        if (status == CellSnapShotStatus.UNCHECKED)
+        if (status == CellSnapshotStatus.UNCHECKED)
         {
             return UNCHECKED_SIGN;
         }
