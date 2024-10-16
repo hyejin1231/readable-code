@@ -14,7 +14,6 @@ public class ConsoleInputHandler implements InputHandler{
     public static final Scanner SCANNER = new Scanner(System.in); // Scanner 를 상수화 해서 재사용함
     private final BoardIndexConverter boardIndexConverter = new BoardIndexConverter();
 
-
     @Override
     public UserAction getUserActionFromUser()
     {
@@ -37,8 +36,8 @@ public class ConsoleInputHandler implements InputHandler{
     public CellPosition getCellPositionFromUser() {
         String userInput = SCANNER.nextLine();
 
-        int colIndex = boardIndexConverter.getSelectedColIndex(userInput);
         int rowIndex = boardIndexConverter.getSelectedRowIndex(userInput);
+        int colIndex = boardIndexConverter.getSelectedColIndex(userInput);
         return CellPosition.of(rowIndex, colIndex);
     }
 }
