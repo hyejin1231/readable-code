@@ -14,6 +14,7 @@ import java.util.Optional;
 /**
  * 리팩토링(1) - 추상화 레벨
  * - 중복 제거, 메서드 추출
+ * - 객체에 메시지 보내기
  */
 public class StudyCafePassMachine {
 
@@ -58,12 +59,14 @@ public class StudyCafePassMachine {
         List<StudyCafePass> allPasses = studyCafeFileHandler.readStudyCafePasses();
 
         return allPasses.stream()
-                .filter(studyCafePass -> studyCafePass.getPassType() == studyCafePassType)
+                .filter(studyCafePass -> studyCafePass.isSamePassType(studyCafePassType))
                 .toList();
     }
 
     private Optional<StudyCafeLockerPass> selectLockerPass(StudyCafePass selectedPass) {
-        if (selectedPass.getPassType() != StudyCafePassType.FIXED) {
+        // 고정 좌석 타입이 아닌가 ? -> 낮은 추상화
+        // 사물함 옵션을 사용할 수 있는 타입이 아닌가 ? -> 높은 추상화
+        if (selectedPass.cannotUseLocker()) {
             return Optional.empty();
         }
 
@@ -83,10 +86,7 @@ public class StudyCafePassMachine {
     private StudyCafeLockerPass findLockerPassCandidateBy(StudyCafePass pass) {
         List<StudyCafeLockerPass> allLockerPasses = studyCafeFileHandler.readLockerPasses();
         return allLockerPasses.stream()
-            .filter(lockerPass ->
-                lockerPass.getPassType() == pass.getPassType()
-                    && lockerPass.getDuration() == pass.getDuration()
-            )
+            .filter(pass::isSameDurationType)
             .findFirst()
             .orElse(null);
     }
