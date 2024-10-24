@@ -1,6 +1,7 @@
 package cleancode.studycafe.tobe;
 
 import cleancode.studycafe.tobe.exception.AppException;
+import cleancode.studycafe.tobe.io.PassReader;
 import cleancode.studycafe.tobe.io.StudyCafeFileHandler;
 import cleancode.studycafe.tobe.io.StudyCafeIoHandler;
 import cleancode.studycafe.tobe.model.order.StudyCafePassOrder;
@@ -26,9 +27,14 @@ public class StudyCafePassMachine {
 
     private final StudyCafeIoHandler ioHandler = new StudyCafeIoHandler();
 
-    private final StudyCafeFileHandler studyCafeFileHandler = new StudyCafeFileHandler();
+    private final PassReader passReader;
 
-    public void run() {
+	public StudyCafePassMachine(PassReader passReader)
+	{
+		this.passReader = passReader;
+	}
+
+	public void run() {
         try {
             ioHandler.showWelcomeMessage();
             ioHandler.showAnnouncement();
@@ -55,7 +61,9 @@ public class StudyCafePassMachine {
     }
 
     private List<StudyCafeSeatPass> findPassCandidateBy(StudyCafePassType studyCafePassType) {
-        StudyCafeSeatPasses allPasses = studyCafeFileHandler.readStudyCafePasses();
+        // 1. 어떤 데이터를 필요로 하는가 -> 데이터 중심을 여기에 초점을 맞추기, 이게 더 나은 추상화이다.
+        // 2. 데이터를 어디로부터 어떻게 가져올 것인가 -> 방법에 초점 맞춘 것
+        StudyCafeSeatPasses allPasses = passReader.readStudyCafePasses();
         return allPasses.findPassBy(studyCafePassType);
     }
 
@@ -79,7 +87,7 @@ public class StudyCafePassMachine {
     }
 
     private Optional<StudyCafeLockerPass> findLockerPassCandidateBy(StudyCafeSeatPass pass) {
-        StudyCafeLockerPasses allLockerPasses = studyCafeFileHandler.readLockerPasses();
+        StudyCafeLockerPasses allLockerPasses = passReader.readLockerPasses();
         return allLockerPasses.findLockerPassBy(pass);
     }
 
